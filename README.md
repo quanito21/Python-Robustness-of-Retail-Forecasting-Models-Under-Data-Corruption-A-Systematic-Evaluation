@@ -1,0 +1,2 @@
+# Python-Robustness-of-Retail-Forecasting-Models-Under-Data-Corruption-A-Systematic-Evaluation
+Evaluating the robustness of retail forecasting models (ARIMA, Prophet, XGBoost, LSTM) against data corruption. This project introduces a systematic corruption framework and "Noise-Aware Training," which boosted Random Forest robustness from 57.92% to 98.80%, proving models can be taught to maintain precision despite messy, real-world data.
