@@ -20,7 +20,7 @@ The experiment was conducted in three distinct phases:
 
 ## Performance and Robustness Results
 
-The table below compares the Mean Absolute Percentage Error (MAPE) of the models under different conditions.
+The table below compares the RMSE of the models under different conditions.
 
 <img width="691" height="218" alt="image" src="https://github.com/user-attachments/assets/1ec27e29-6092-4b96-9f29-11e5a29126d4" />
 
