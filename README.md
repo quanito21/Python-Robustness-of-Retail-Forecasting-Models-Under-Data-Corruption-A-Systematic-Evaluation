@@ -22,7 +22,7 @@ The experiment was conducted in three distinct phases:
 
 The table below compares the Mean Absolute Percentage Error (MAPE) of the models under different conditions.
 
-<img width="756" height="218" alt="image" src="https://github.com/user-attachments/assets/e3d4b104-a971-434e-bf4b-69fc34c63d7e" />
+<img width="691" height="218" alt="image" src="https://github.com/user-attachments/assets/1ec27e29-6092-4b96-9f29-11e5a29126d4" />
 
 ### The Noise-Aware Breakthrough
 While the LSTM was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
