@@ -20,9 +20,34 @@ The experiment was conducted in three distinct phases:
 
 ## Performance and Robustness Results
 
-The table below compares the RMSE of the models under different conditions.
+## Model Performance Comparison (RMSE)
 
-<img width="691" height="218" alt="image" src="https://github.com/user-attachments/assets/1ec27e29-6092-4b96-9f29-11e5a29126d4" />
+### **Test Results: Clean Data**
+| Model | RMSE (Clean) |
+| :--- | :--- |
+| **LSTM** | **11.5** |
+| **Random Forest** | 11.7 |
+| **XGBoost** | 11.7 |
+| Naïve Baseline | 16.3 |
+| ARIMA / Prophet | 152.0 |
+
+---
+
+### **Test Results: Corrupted Data**
+| Model | RMSE (Corrupted) |
+| :--- | :--- |
+| **Random Forest** | **6.4** |
+| Naïve Baseline | 18.9 |
+| XGBoost | 24.6 |
+| LSTM | 29.8 |
+| ARIMA / Prophet | 165.0 |
+
+---
+
+### **Key Observations**
+* **Best Overall Performance:** While **LSTM** slightly edges out the competition on clean data, **Random Forest** shows significantly better robustness when dealing with corrupted data.
+* **Model Sensitivity:** The **LSTM** model's error more than doubles (from 11.5 to 29.8) when moving from clean to corrupted data, whereas **Random Forest** actually reports a lower RMSE in the corrupted set provided.
+* **Outliers:** The **ARIMA / Prophet** models performed significantly worse than all other candidates across both datasets, suggesting they may not be suitable for this specific time-series or data structure.
 
 ### The Noise-Aware Breakthrough
 While the LSTM was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
