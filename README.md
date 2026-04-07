@@ -118,7 +118,3 @@ Retrain Random Forest on corrupted data to improve stability.
 - **Modeling:** Scikit-learn, XGBoost, TensorFlow (Keras), Prophet, Statsmodels  
 - **Data Science:** Pandas, NumPy, Matplotlib  
 - **Environment:** Jupyter Notebook / Python  
-
-cd retail-forecasting-robustness
-pip install -r requirements.txt
-jupyter notebook
