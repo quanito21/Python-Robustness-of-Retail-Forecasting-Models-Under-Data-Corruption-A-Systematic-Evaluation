@@ -77,25 +77,30 @@ Retrain Random Forest on corrupted data to improve stability.
 
 ## 📈 Results (RMSE-Based)
 
-| Model            | RMSE (Clean) | RMSE (Corrupted) | Robustness |
-|------------------|-------------|------------------|------------|
-| **LSTM**          | **10.45**   | 23.10            | 🔴 Low      |
-| **Random Forest** | 11.72       | 18.95            | 🟢 High     |
-| **XGBoost**       | 11.55       | 17.80            | 🟡 Moderate |
-| **ARIMA**         | 150+        | 170+             | 🔴 Low      |
-| **Prophet**       | 150+        | 170+             | 🔴 Low      |
+| Model | RMSE (Clean) | RMSE (Corrupted) | Robustness |
+| :--- | :--- | :--- | :--- |
+| **LSTM** | **10.45** | 23.10 | 🔴 Low |
+| **Random Forest** | 11.72 | 18.95 | 🟢 High |
+| **XGBoost** | 11.55 | 17.80 | 🟡 Moderate |
+| **ARIMA** | 150.0+ | 170.0+ | 🔴 Low |
+| **Prophet** | 150.0+ | 170.0+ | 🔴 Low |
+
+> **Observation:** While LSTM is the most precise on clean data, it is the most fragile under corruption, with its error more than doubling. Traditional models (ARIMA/Prophet) struggled with the dataset's high-dimensional features (Discounts, StoreID, Categories), resulting in significantly higher baseline errors.
 
 ---
 
-## 🚀 Noise-Aware Training Result
+## 🚀 The Noise-Aware Breakthrough
+*Targeting the Random Forest for optimization due to its natural structural resilience.*
 
-| Metric | Original RF | Noise-Aware RF | Improvement |
+| Metric | Original RF (Dirty) | Noise-Aware RF (Dirty) | Improvement |
 | :--- | :---: | :---: | :---: |
-| Robustness Score | 57.92% | 98.80% | +40.88% |
+| **RMSE** | 18.95 | **11.90** | **-37.2% Error** |
+| **Robustness Score** | 57.92% | **98.80%** | **+40.88%** |
 
-👉 Training on corrupted data dramatically improved model stability without changing architecture.
+👉 **Key Insight:** By training on corrupted data, the Random Forest "learned" to ignore noise, bringing performance on messy data back to near-baseline levels without changing the model architecture.
 
 ---
+
 
 ## 🏆 Key Takeaways
 
