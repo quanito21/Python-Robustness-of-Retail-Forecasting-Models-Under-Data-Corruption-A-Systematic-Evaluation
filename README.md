@@ -82,7 +82,7 @@ The table below compares the Mean Absolute Percentage Error (MAPE) of the models
 - 🟢 **High Robustness** → Stable even under data corruption  
 
 ### The Noise-Aware Breakthrough
-While the LSTM was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
+While the MLP was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
 
 | Metric | Original RF | Noise-Aware RF | Improvement |
 | :--- | :---: | :---: | :---: |
