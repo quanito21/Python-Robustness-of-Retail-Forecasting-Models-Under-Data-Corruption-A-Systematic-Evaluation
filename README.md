@@ -20,7 +20,6 @@ The experiment was conducted in three distinct phases:
 
 ## Performance and Robustness Results
 
-## Model Performance Comparison (RMSE)
 
 ### **Test Results: Clean Data**
 | Model | RMSE (Clean) |
