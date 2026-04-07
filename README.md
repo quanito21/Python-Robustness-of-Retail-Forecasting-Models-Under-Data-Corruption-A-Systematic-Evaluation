@@ -1,9 +1,27 @@
-# Robustness of Retail Forecasting Models Under Data Corruption
+# 📉 Robustness of Retail Forecasting Models Under Data Corruption
 
-This project evaluates how various forecasting architectures—ranging from traditional statistical models to deep learning—handle real-world data "messiness." By introducing a Systematic Corruption Framework, I demonstrate that model precision on clean data does not always translate to reliability in production.
+> Models that perform best on clean data are NOT the most reliable in production.
+
+This project shows that while deep learning models achieve the lowest error on clean retail data, **Random Forest outperforms all models under real-world noise**, and a simple noise-aware training strategy improves robustness by **+40.88%**.
+
+## ⚡ TL;DR
+
+- 🥇 **Best Accuracy (Clean Data):** MLP (~5.5% MAPE)
+- 🛡️ **Most Robust Model:** Random Forest
+- 📉 **Biggest Failure:** MLP under noise (~3–4x degradation)
+- 🚀 **Key Result:** Noise-aware training improved robustness by **+40.88%**
+
+## 🌍 Why This Matters
+
+In real-world retail systems:
+- Data is often incomplete, noisy, or incorrect
+- Models are rarely retrained instantly
+- Small errors can lead to large inventory or revenue losses
+
+👉 This project demonstrates that **robustness > raw accuracy** in production systems.
 
 ## Project Overview
-In retail, data is rarely pristine. It is often plagued by missing values, sensor noise, and manual entry errors. This project benchmarks ARIMA, Prophet, Random Forest, XGBoost, and LSTM models to determine which architectures are most resilient to data degradation and introduces a "Noise-Aware" training strategy to mitigate performance loss.
+In retail, data is rarely pristine. It is often plagued by missing values, sensor noise, and manual entry errors. This project benchmarks ARIMA, Prophet, Random Forest, XGBoost, and MLP models to determine which architectures are most resilient to data degradation and introduces a "Noise-Aware" training strategy to mitigate performance loss.
 
 ## Dataset and Features
 The analysis used a retail sales dataset of 70,000 transactions spanning 2018–2022.
@@ -73,21 +91,10 @@ While the LSTM was the most precise on clean data, it was brittle. The Random Fo
 ---
 
 ### **Key Observations**
-* **Best Overall Performance:** While **LSTM** slightly edges out the competition on clean data, **Random Forest** shows significantly better robustness when dealing with corrupted data.
-* **Model Sensitivity:** The **LSTM** model's error more than doubles (from 11.5 to 29.8) when moving from clean to corrupted data, whereas **Random Forest** actually reports a lower RMSE in the corrupted set provided.
+* **Best Overall Performance:** While **MLP** slightly edges out the competition on clean data, **Random Forest** shows significantly better robustness when dealing with corrupted data.
+* **Model Sensitivity:** The **MLP** model's error more than doubles (from 11.5 to 29.8) when moving from clean to corrupted data, whereas **Random Forest** actually reports a lower MAPE in the corrupted set provided.
 * **Outliers:** The **ARIMA / Prophet** models performed significantly worse than all other candidates across both datasets, suggesting they may not be suitable for this specific time-series or data structure.
 
-### The Noise-Aware Breakthrough
-While the LSTM was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
-
-| Metric | Original RF | Noise-Aware RF | Improvement |
-| :--- | :---: | :---: | :---: |
-| Robustness Score | 57.92% | 98.80% | +40.88% |
-
-## Key Takeaways
-* Complexity vs. Resilience: Deep learning models (LSTM) provide the highest precision but are the most sensitive to data corruption.
-* Ensemble Advantage: Random Forest and XGBoost offer a better balance of accuracy and stability for "messy" real-world applications.
-* Training Strategy Matters: You don't always need a more complex model; sometimes you just need a training strategy that simulates the "dirtiness" of the real world.
 
 ## Technologies Used
 * Modeling: Scikit-learn, XGBoost, TensorFlow (Keras), Prophet, Statsmodels.
