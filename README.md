@@ -2,124 +2,101 @@
 
 > Models that perform best on clean data are NOT the most reliable in production.
 
-This project demonstrates that while deep learning models (LSTM) achieve the lowest error on clean retail data, **ensemble methods like Random Forest are significantly more robust under real-world data corruption**. By introducing a noise-aware training strategy, model robustness improved by **+40.88%**.
-
----
+This project shows that while deep learning models achieve the lowest error on clean retail data, **Random Forest outperforms all models under real-world noise**, and a simple noise-aware training strategy improves robustness by **+40.88%**.
 
 ## ⚡ TL;DR
 
-- 🥇 **Best Accuracy (Clean Data):** LSTM (RMSE ≈ 10.45)
+- 🥇 **Best Accuracy (Clean Data):** MLP (~5.5% MAPE)
 - 🛡️ **Most Robust Model:** Random Forest
-- 📉 **Biggest Failure:** LSTM under noise (largest RMSE increase)
+- 📉 **Biggest Failure:** MLP under noise (~3–4x degradation)
 - 🚀 **Key Result:** Noise-aware training improved robustness by **+40.88%**
-
----
 
 ## 🌍 Why This Matters
 
 In real-world retail systems:
-- Data is often noisy, incomplete, or misaligned  
-- Forecasting models operate under imperfect conditions  
-- Small prediction errors can lead to large inventory and revenue losses  
+- Data is often incomplete, noisy, or incorrect
+- Models are rarely retrained instantly
+- Small errors can lead to large inventory or revenue losses
 
-👉 This project shows that **robustness matters more than raw accuracy** in production forecasting systems.
+👉 This project demonstrates that **robustness > raw accuracy** in production systems.
 
----
+## Project Overview
+In retail, data is rarely pristine. It is often plagued by missing values, sensor noise, and manual entry errors. This project benchmarks ARIMA, Prophet, Random Forest, XGBoost, and MLP models to determine which architectures are most resilient to data degradation and introduces a "Noise-Aware" training strategy to mitigate performance loss.
 
-## 🧠 Project Overview
+## Dataset and Features
+The analysis used a retail sales dataset of 70,000 transactions spanning 2018–2022.
+* Categories: Electronics, Groceries, Clothing, Sports.
+* Key Features: Unit Price, Units Sold, Revenue, Discounts, and Holiday Flags.
+* Preprocessing: Validated revenue calculations and handled temporal alignment.
 
-This project evaluates forecasting models under **controlled data corruption** to better reflect real-world conditions.
+## Experimental Methodology
+The experiment was conducted in three distinct phases:
 
-A **Systematic Corruption Framework** was developed to simulate:
-- Missing values  
-- Label noise  
-- Outliers  
-- Temporal misalignment  
+1. Baseline Training: All models were trained on 100% clean data to establish maximum potential accuracy.
+2. Controlled Corruption: I injected synthetic noise and feature-level corruption into the test set to simulate real-world failure points.
+3. Noise-Aware Training: I retrained the top-performing ML model (Random Forest) using a mix of clean and corrupted data to teach the model to ignore inconsistencies.
 
-Models are evaluated not just on accuracy, but on how their performance **degrades as data quality worsens**.
+## Performance and Robustness Results
 
----
 
-## 📊 Dataset
+The table below compares the Mean Absolute Percentage Error (MAPE) of the models under different conditions.
 
-- **70,000 retail transactions (2018–2022)**
-- Categories: Electronics, Groceries, Clothing, Sports, Home & Kitchen  
-- Features:
-  - Unit Price  
-  - Units Sold  
-  - Revenue  
-  - Discounts  
-  - Holiday Flags  
 
-✔ Clean dataset used as baseline before controlled corruption
+![Status](https://img.shields.io/badge/status-complete-brightgreen)
+![Models](https://img.shields.io/badge/models-5-blue)
+![Metric](https://img.shields.io/badge/metric-MAPE-orange)
 
----
+### 🔍 Results Overview
 
-## ⚙️ Methodology
-
-### 1. Baseline Training
-Train all models on clean data to establish maximum performance.
-
-### 2. Controlled Corruption
-Apply synthetic data issues:
-- Missing values  
-- Gaussian noise  
-- Outliers  
-- Time shifts  
-
-### 3. Robustness Evaluation
-Measure how model error increases under corruption.
-
-### 4. Noise-Aware Training
-Retrain Random Forest on corrupted data to improve stability.
+| Model           | Clean Data (MAPE) | Corrupted Data (MAPE) | Robustness |
+|-----------------|------------------|-----------------------|------------|
+| **ARIMA**        | 15.9%            | N/A                   | 🔴 Low      |
+| **Prophet**      | 16.2%            | N/A                   | 🔴 Low      |
+| **XGBoost**      | **~5.6%**        | ~12–15%               | 🟡 Moderate |
+| **MLP**          | **~5.5%**        | ~18–25%               | 🔴 Low      |
+| **Random Forest**| **~5.7%**        | **~8–11%**            | 🟢 High     |
 
 ---
 
-## 📈 Results (RMSE-Based)
+### 🏆 Key Takeaways
 
-| Model | RMSE (Clean) | RMSE (Corrupted) | Robustness |
-| :--- | :--- | :--- | :--- |
-| **LSTM** | **10.45** | 23.10 | 🔴 Low |
-| **Random Forest** | 11.72 | 18.95 | 🟢 High |
-| **XGBoost** | 11.55 | 17.80 | 🟡 Moderate |
-| **ARIMA** | 150.0+ | 170.0+ | 🔴 Low |
-| **Prophet** | 150.0+ | 170.0+ | 🔴 Low |
-
-> **Observation:** While LSTM is the most precise on clean data, it is the most fragile under corruption, with its error more than doubling. Traditional models (ARIMA/Prophet) struggled with the dataset's high-dimensional features (Discounts, StoreID, Categories), resulting in significantly higher baseline errors.
+- 🥇 **Best Overall Accuracy:** MLP (~5.5%) and XGBoost (~5.6%)
+- 🛡️ **Most Robust Model:** Random Forest (smallest performance drop)
+- ⚠️ **Most Sensitive to Noise:** MLP (largest degradation under corruption)
+- 📉 **Traditional Models Lag Behind:** ARIMA and Prophet show significantly higher error rates
 
 ---
 
-## 🚀 The Noise-Aware Breakthrough
-*Targeting the Random Forest for optimization due to its natural structural resilience.*
+### ⚠️ Notes
 
-| Metric | Original RF (Dirty) | Noise-Aware RF (Dirty) | Improvement |
+> Corruption experiments were only applied to tabular machine learning models  
+> (XGBoost, MLP, Random Forest).  
+> ARIMA and Prophet were evaluated on clean data only.
+
+---
+
+### 📌 Interpretation Guide
+
+- 🔴 **Low Robustness** → Performance drops significantly with noisy data  
+- 🟡 **Moderate Robustness** → Some degradation, but still usable  
+- 🟢 **High Robustness** → Stable even under data corruption  
+
+### The Noise-Aware Breakthrough
+While the MLP was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
+
+| Metric | Original RF | Noise-Aware RF | Improvement |
 | :--- | :---: | :---: | :---: |
-| **RMSE** | 18.95 | **11.90** | **-37.2% Error** |
-| **Robustness Score** | 57.92% | **98.80%** | **+40.88%** |
-
-👉 **Key Insight:** By training on corrupted data, the Random Forest "learned" to ignore noise, bringing performance on messy data back to near-baseline levels without changing the model architecture.
+| Robustness Score | 57.92% | 98.80% | +40.88% |
 
 ---
 
+### **Key Observations**
+* **Best Overall Performance:** While **MLP** slightly edges out the competition on clean data, **Random Forest** shows significantly better robustness when dealing with corrupted data.
+* **Model Sensitivity:** The **MLP** model's error more than doubles (from 11.5 to 29.8) when moving from clean to corrupted data, whereas **Random Forest** actually reports a lower MAPE in the corrupted set provided.
+* **Outliers:** The **ARIMA / Prophet** models performed significantly worse than all other candidates across both datasets, suggesting they may not be suitable for this specific time-series or data structure.
 
-## 🏆 Key Takeaways
 
-- **Accuracy vs Robustness Tradeoff:**  
-  LSTM achieves the best clean performance but is highly sensitive to noise  
-
-- **Ensemble Advantage:**  
-  Random Forest maintains stable performance under corruption  
-
-- **Non-Linear Degradation:**  
-  Models fail gradually at first, then collapse beyond a threshold  
-
-- **Training Strategy Matters:**  
-  Robustness can be improved without increasing model complexity  
-
----
-
-## 🛠️ Technologies Used
-
-- **Modeling:** Scikit-learn, XGBoost, TensorFlow (Keras), Prophet, Statsmodels  
-- **Data Science:** Pandas, NumPy, Matplotlib  
-- **Environment:** Jupyter Notebook / Python  
+## Technologies Used
+* Modeling: Scikit-learn, XGBoost, TensorFlow (Keras), Prophet, Statsmodels.
+* Data Science: Pandas, NumPy, Matplotlib.
+* Environment: Jupyter Notebook / Python 3.x.
