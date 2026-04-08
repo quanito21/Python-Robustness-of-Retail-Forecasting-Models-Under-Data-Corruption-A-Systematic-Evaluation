@@ -40,41 +40,21 @@ The experiment was conducted in three distinct phases:
 
 ### 🔍 Results Overview
 
-## 📊 Model Performance Ranking
+## 📊 Model Ranking (Best → Worst)
 
-Based on overall performance (accuracy on clean data + robustness to corrupted data), the models are ranked as follows:
+| Rank | Model              | Clean MAPE | Dirty MAPE | Robustness |
+|------|--------------------|------------|------------|------------|
+| 1    | Random Forest      | 0.0562     | 0.0971     | 🟢 High     |
+| 2    | LSTM (Neural Net)  | 0.0470     | 0.1644     | 🟡 Moderate |
+| 3    | XGBoost            | 0.0569     | 0.1996     | 🔴 Low      |
+| 4    | Prophet            | 1.4785     | 1.2470     | 🔴 Low      |
 
-### 🏆 Best to Worst
+---
 
-1. **Random Forest**
-   - Clean Data (MAPE): ~5.7%
-   - Corrupted Data (MAPE): ~8–11%
-   - Robustness: 🟢 High  
-   - ✅ Best overall balance of accuracy and robustness
+### 🌲 Random Forest Robustness
 
-2. **XGBoost**
-   - Clean Data (MAPE): ~5.6%
-   - Corrupted Data (MAPE): ~12–15%
-   - Robustness: 🟡 Moderate  
-   - ⚖️ Strong performance but less robust than Random Forest
-
-3. **MLP (Neural Network)**
-   - Clean Data (MAPE): ~5.5%
-   - Corrupted Data (MAPE): ~18–25%
-   - Robustness: 🔴 Low  
-   - ⚠️ Excellent on clean data, but degrades significantly with noise
-
-4. **ARIMA**
-   - Clean Data (MAPE): 15.9%
-   - Corrupted Data (MAPE): N/A
-   - Robustness: 🔴 Low  
-   - 📉 Traditional model with lower accuracy
-
-5. **Prophet**
-   - Clean Data (MAPE): 16.2%
-   - Corrupted Data (MAPE): N/A
-   - Robustness: 🔴 Low  
-   - 📉 Lowest overall performance in this comparison
+- **Original Robustness:** 57.92%  
+- **Noise-Aware Robustness:** 98.80%
 
 ---
 
