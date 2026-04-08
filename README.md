@@ -4,13 +4,6 @@
 
 This project shows that while deep learning models (LSTM) achieve the lowest error on clean retail data, **Ensemble models (XGBoost/Random Forest) outperform them under real-world noise**, and a noise-aware training strategy improves robustness by **+36.91%**.
 
-## ⚡ TL;DR
-
-- 🥇 **Best Accuracy (Clean Data):** LSTM (1.32% MAPE)
-- 🛡️ **Most Robust Model:** XGBoost (64.91% Robustness)
-- 📉 **Biggest Failure:** LSTM under noise (Error more than doubles)
-- 🚀 **Key Result:** Noise-aware training improved RF robustness by **+36.91%**
-
 ## 🌍 Why This Matters
 
 In real-world retail systems:
