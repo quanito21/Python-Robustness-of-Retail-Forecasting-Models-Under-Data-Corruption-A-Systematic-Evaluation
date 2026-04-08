@@ -36,15 +36,7 @@ The experiment was conducted in three distinct phases:
 2. Controlled Corruption: I injected synthetic noise and feature-level corruption into the test set to simulate real-world failure points.
 3. Noise-Aware Training: I retrained the top-performing ML model (Random Forest) using a mix of clean and corrupted data to teach the model to ignore inconsistencies.
 
-## Performance and Robustness Results
 
-
-The table below compares the Mean Absolute Percentage Error (MAPE) of the models under different conditions.
-
-
-![Status](https://img.shields.io/badge/status-complete-brightgreen)
-![Models](https://img.shields.io/badge/models-5-blue)
-![Metric](https://img.shields.io/badge/metric-MAPE-orange)
 
 ### 🔍 Results Overview
 
