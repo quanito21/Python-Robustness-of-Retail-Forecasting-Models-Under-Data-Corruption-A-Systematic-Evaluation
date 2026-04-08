@@ -40,30 +40,22 @@ The experiment was conducted in three distinct phases:
 
 ### 🔍 Results Overview
 
-## 📊 Model Ranking (Best → Worst)
+| Rank | Model             | Clean MAPE | Dirty MAPE | Robustness           |
+| ---- | ----------------- | ---------- | ---------- | -------------------- |
+| 1    | XGBoost           | 0.0148     | 0.0228     | 🟢 High (64.91%)     |
+| 2    | Random Forest     | 0.0151     | 0.0244     | 🟢 High (61.89%)     |
+| 3    | LSTM (Neural Net) | 0.0132     | 0.0292     | 🟡 Moderate (45.21%) |
+| 4    | ARIMA             | >0.20      | >0.25      | 🔴 Low               |
 
-| Rank | Model              | Clean MAPE | Dirty MAPE | Robustness |
-|------|--------------------|------------|------------|------------|
-| 1    | Random Forest      | 0.0562     | 0.0971     | 🟢 High     |
-| 2    | LSTM (Neural Net)  | 0.0470     | 0.1644     | 🟡 Moderate |
-| 3    | XGBoost            | 0.0569     | 0.1996     | 🔴 Low      |
-| 4    | Prophet            | 1.4785     | 1.2470     | 🔴 Low      |
-
----
-
-### 🌲 Random Forest Robustness
-
-- **Original Robustness:** 57.92%  
-- **Noise-Aware Robustness:** 98.80%
-
----
+🌲 Random Forest Robustness
+Robustness (MAPE-Based): 61.89%
 
 ### 💡 Key Takeaways
 
 - **Best for real-world (noisy) data:** Random Forest  
 - **Best for clean data only:** MLP / XGBoost  
 - **Most consistent model:** Random Forest  
-- **Least reliable overall:** Prophet
+- **Least reliable overall:** ARIMA
 
 
 
