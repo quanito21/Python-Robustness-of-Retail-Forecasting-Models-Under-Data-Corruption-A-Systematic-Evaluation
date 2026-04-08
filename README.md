@@ -1,94 +1,73 @@
 # 📉 Robustness of Retail Forecasting Models Under Data Corruption
 
-> Models that perform best on clean data are NOT the most reliable in production.
+> Models that perform best on clean data are NOT always the most reliable in production.
 
-This project shows that while deep learning models achieve the lowest error on clean retail data, **Random Forest outperforms all models under real-world noise**, and a simple noise-aware training strategy improves robustness by **+40.88%**.
+This project shows that while deep learning models (LSTM) achieve the lowest error on clean retail data, **Ensemble models (XGBoost/Random Forest) outperform them under real-world noise**, and a noise-aware training strategy improves robustness by **+36.91%**.
 
 ## ⚡ TL;DR
 
-- 🥇 **Best Accuracy (Clean Data):** MLP (~5.5% MAPE)
-- 🛡️ **Most Robust Model:** Random Forest
-- 📉 **Biggest Failure:** MLP under noise (~3–4x degradation)
-- 🚀 **Key Result:** Noise-aware training improved robustness by **+40.88%**
+- 🥇 **Best Accuracy (Clean Data):** LSTM (1.32% MAPE)
+- 🛡️ **Most Robust Model:** XGBoost (64.91% Robustness)
+- 📉 **Biggest Failure:** LSTM under noise (Error more than doubles)
+- 🚀 **Key Result:** Noise-aware training improved RF robustness by **+36.91%**
 
 ## 🌍 Why This Matters
 
 In real-world retail systems:
-- Data is often incomplete, noisy, or incorrect
-- Models are rarely retrained instantly
-- Small errors can lead to large inventory or revenue losses
+- Data is often incomplete, noisy, or incorrect.
+- Models are rarely retrained instantly.
+- Small errors can lead to large inventory or revenue losses.
 
-👉 This project demonstrates that **robustness > raw accuracy** in production systems.
+👉 This project demonstrates that **robustness > raw accuracy** for production reliability.
 
 ## Project Overview
-In retail, data is rarely pristine. It is often plagued by missing values, sensor noise, and manual entry errors. This project benchmarks ARIMA, Prophet, Random Forest, XGBoost, and MLP models to determine which architectures are most resilient to data degradation and introduces a "Noise-Aware" training strategy to mitigate performance loss.
+In retail, data is rarely pristine. It is often plagued by missing values, sensor noise, and manual entry errors. This project benchmarks ARIMA, Random Forest, XGBoost, and LSTM models to determine which architectures are most resilient to data degradation and introduces a "Noise-Aware" training strategy to mitigate performance loss.
 
 ## Dataset and Features
 The analysis used a retail sales dataset of 70,000 transactions spanning 2018–2022.
-* Categories: Electronics, Groceries, Clothing, Sports.
-* Key Features: Unit Price, Units Sold, Revenue, Discounts, and Holiday Flags.
-* Preprocessing: Validated revenue calculations and handled temporal alignment.
+* **Categories:** Electronics, Groceries, Clothing, Sports.
+* **Key Features:** Unit Price, Units Sold, Revenue, Discounts, and Holiday Flags.
+* **Preprocessing:** Validated revenue calculations and handled temporal alignment.
 
 ## Experimental Methodology
-The experiment was conducted in three distinct phases:
+1. **Baseline Training:** All models were trained on 100% clean data to establish maximum potential accuracy.
+2. **Controlled Corruption:** I injected synthetic noise and feature-level corruption into the test set to simulate real-world failure points.
+3. **Noise-Aware Training:** I retrained the Random Forest using a mix of clean and corrupted data to teach the model to ignore inconsistencies.
 
-1. Baseline Training: All models were trained on 100% clean data to establish maximum potential accuracy.
-2. Controlled Corruption: I injected synthetic noise and feature-level corruption into the test set to simulate real-world failure points.
-3. Noise-Aware Training: I retrained the top-performing ML model (Random Forest) using a mix of clean and corrupted data to teach the model to ignore inconsistencies.
+# 🔍 Results & Performance Metrics
 
+### 🏆 Model Rankings: Reliability vs. Precision
 
+| Rank | Model | MAPE (Clean) | MAPE (Dirty) | Robustness Score | Status |
+| :--- | :--- | :---: | :---: | :---: | :--- |
+| **1** | **XGBoost** | 1.48% | 2.28% | **64.91%** | 🟢 **Top Pick** |
+| **2** | **Random Forest** | 1.51% | 2.44% | **61.89%** | 🟢 **Stable** |
+| **3** | **LSTM** | 1.32% | 2.92% | **45.21%** | 🟡 **Brittle** |
+| **4** | **ARIMA** | >20.0% | >25.0% | **Low** | 🔴 **Unreliable** |
 
-### 🔍 Results Overview
+---
 
-| Rank | Model             | Clean MAPE | Dirty MAPE | Robustness           |
-| ---- | ----------------- | ---------- | ---------- | -------------------- |
-| 1    | XGBoost           | 0.0148     | 0.0228     | 🟢 High (64.91%)     |
-| 2    | Random Forest     | 0.0151     | 0.0244     | 🟢 High (61.89%)     |
-| 3    | LSTM (Neural Net) | 0.0132     | 0.0292     | 🟡 Moderate (45.21%) |
-| 4    | ARIMA             | >0.20      | >0.25      | 🔴 Low               |
+### ⚡ The "Noise-Aware" Breakthrough
+By applying **Noise-Aware Training** to the Random Forest, I achieved a near-perfect resilience score, effectively "teaching" the model to handle corruption.
 
-🌲 Random Forest Robustness
-Robustness (MAPE-Based): 61.89%
+| Strategy | Robustness Score | Improvement |
+| :--- | :---: | :---: |
+| **Standard Random Forest** | 61.89% | -- |
+| **Noise-Aware Random Forest** | **98.80%** | **+36.91%** |
+
+---
 
 ### 💡 Key Takeaways
 
-- **Best for real-world (noisy) data:** Random Forest  
-- **Best for clean data only:** MLP / XGBoost  
-- **Most consistent model:** Random Forest  
-- **Least reliable overall:** ARIMA
-
-
-
-### ⚠️ Notes
-
-> Corruption experiments were only applied to tabular machine learning models  
-> (XGBoost, MLP, Random Forest).  
-> ARIMA and Prophet were evaluated on clean data only.
-
----
-
-### 📌 Interpretation Guide
-
-- 🔴 **Low Robustness** → Performance drops significantly with noisy data  
-- 🟡 **Moderate Robustness** → Some degradation, but still usable  
-- 🟢 **High Robustness** → Stable even under data corruption  
-
-### The Noise-Aware Breakthrough
-While the MLP was the most precise on clean data, it was brittle. The Random Forest showed the best natural resilience. By applying Noise-Aware training to the Random Forest, I achieved a significant jump in reliability:
-
-| Metric | Original RF | Noise-Aware RF | Improvement |
-| :--- | :---: | :---: | :---: |
-| Robustness Score | 57.92% | 98.80% | +40.88% |
-
----
+* **Accuracy vs. Robustness:** The **LSTM** was the most precise on clean data (1.32% MAPE) but the most fragile, with its error increasing by over 120% under noise.
+* **Ensemble Resilience:** **XGBoost** and **Random Forest** proved more reliable because their tree-based structures naturally average out localized noise.
+* **The Winner:** For real-world deployment, the **Noise-Aware Random Forest** is the clear winner, offering near-total immunity to the simulated data corruptions.
 
 ### **Key Observations**
-* **Best Overall Performance:** While **MLP** slightly edges out the competition on clean data, **Random Forest** shows significantly better robustness when dealing with corrupted data.
-* **Model Sensitivity:** The **MLP** model's error more than doubles (from 11.5 to 29.8) when moving from clean to corrupted data, whereas **Random Forest** actually reports a lower MAPE in the corrupted set provided.
-* **Outliers:** The **ARIMA / Prophet** models performed significantly worse than all other candidates across both datasets, suggesting they may not be suitable for this specific time-series or data structure.
-
+* **Model Sensitivity:** The LSTM model's dependency on sequential consistency makes it highly vulnerable to even small perturbations in input features.
+* **Outliers:** **ARIMA** performed significantly worse (>20% MAPE) even on clean data, suggesting it cannot capture the non-linear complexities of this retail dataset.
 
 ## Technologies Used
-* Modeling: Scikit-learn, XGBoost, TensorFlow (Keras), Prophet, Statsmodels.
-* Data Science: Pandas, NumPy, Matplotlib.
-* Environment: Jupyter Notebook / Python 3.x.
+* **Modeling:** Scikit-learn, XGBoost, TensorFlow (Keras), Statsmodels.
+* **Data Science:** Pandas, NumPy, Matplotlib.
+* **Environment:** Jupyter Notebook / Python 3.x.
