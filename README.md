@@ -48,24 +48,52 @@ The table below compares the Mean Absolute Percentage Error (MAPE) of the models
 
 ### 🔍 Results Overview
 
-| Model           | Clean Data (MAPE) | Corrupted Data (MAPE) | Robustness |
-|-----------------|------------------|-----------------------|------------|
-| **ARIMA**        | 15.9%            | N/A                   | 🔴 Low      |
-| **Prophet**      | 16.2%            | N/A                   | 🔴 Low      |
-| **XGBoost**      | **~5.6%**        | ~12–15%               | 🟡 Moderate |
-| **MLP**          | **~5.5%**        | ~18–25%               | 🔴 Low      |
-| **Random Forest**| **~5.7%**        | **~8–11%**            | 🟢 High     |
+## 📊 Model Performance Ranking
+
+Based on overall performance (accuracy on clean data + robustness to corrupted data), the models are ranked as follows:
+
+### 🏆 Best to Worst
+
+1. **Random Forest**
+   - Clean Data (MAPE): ~5.7%
+   - Corrupted Data (MAPE): ~8–11%
+   - Robustness: 🟢 High  
+   - ✅ Best overall balance of accuracy and robustness
+
+2. **XGBoost**
+   - Clean Data (MAPE): ~5.6%
+   - Corrupted Data (MAPE): ~12–15%
+   - Robustness: 🟡 Moderate  
+   - ⚖️ Strong performance but less robust than Random Forest
+
+3. **MLP (Neural Network)**
+   - Clean Data (MAPE): ~5.5%
+   - Corrupted Data (MAPE): ~18–25%
+   - Robustness: 🔴 Low  
+   - ⚠️ Excellent on clean data, but degrades significantly with noise
+
+4. **ARIMA**
+   - Clean Data (MAPE): 15.9%
+   - Corrupted Data (MAPE): N/A
+   - Robustness: 🔴 Low  
+   - 📉 Traditional model with lower accuracy
+
+5. **Prophet**
+   - Clean Data (MAPE): 16.2%
+   - Corrupted Data (MAPE): N/A
+   - Robustness: 🔴 Low  
+   - 📉 Lowest overall performance in this comparison
 
 ---
 
-### 🏆 Key Takeaways
+### 💡 Key Takeaways
 
-- 🥇 **Best Overall Accuracy:** MLP (~5.5%) and XGBoost (~5.6%)
-- 🛡️ **Most Robust Model:** Random Forest (smallest performance drop)
-- ⚠️ **Most Sensitive to Noise:** MLP (largest degradation under corruption)
-- 📉 **Traditional Models Lag Behind:** ARIMA and Prophet show significantly higher error rates
+- **Best for real-world (noisy) data:** Random Forest  
+- **Best for clean data only:** MLP / XGBoost  
+- **Most consistent model:** Random Forest  
+- **Least reliable overall:** Prophet
 
----
+
 
 ### ⚠️ Notes
 
