@@ -33,7 +33,7 @@ The analysis used a retail sales dataset of 70,000 transactions spanning 2018–
 
 | Rank | Model | MAPE (Clean) | MAPE (Dirty) | Robustness Score | Status |
 | :--- | :--- | :---: | :---: | :---: | :--- |
-| **1** | **XGBoost** | 1.48% | 2.28% | **64.91%** | 🟢 **Top Pick** |
+| **1** | **XGBoost** | 1.48% | 2.28% | **64.91%** | 🏆 **Top Pick** |
 | **2** | **Random Forest** | 1.51% | 2.44% | **61.89%** | 🟢 **Stable** |
 | **3** | **LSTM** | 1.32% | 2.92% | **45.21%** | 🟡 **Brittle** |
 | **4** | **ARIMA** | >20.0% | >25.0% | **Low** | 🔴 **Unreliable** |
@@ -49,6 +49,17 @@ By applying **Noise-Aware Training** to the Random Forest, I achieved a near-per
 | **Noise-Aware Random Forest** | **98.80%** | **+36.91%** |
 
 ---
+
+🏆 Model Rankings: Reliability vs. Precision after Noise-Aware
+
+| Rank | Model                     | MAPE (Clean) | MAPE (Dirty) | Robustness Score | Status            |
+|------|---------------------------|--------------|--------------|------------------|-------------------|
+| 1    | Noise-Aware Random Forest | 1.51%        | 1.53%        | 98.80%           | 🏆 Elite Stability |
+| 2    | XGBoost                   | 1.48%        | 2.28%        | 64.91%           | 🟢 Top Pick        |
+| 3    | Random Forest (Standard)  | 1.51%        | 2.44%        | 61.89%           | 🟢 Stable          |
+| 4    | LSTM                      | 1.32%        | 2.92%        | 45.21%           | 🟡 Brittle         |
+| 5    | ARIMA                     | >20.0%       | >25.0%       | Low              | 🔴 Unreliable      |
+
 
 ### 💡 Key Takeaways
 
